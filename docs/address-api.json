@@ -1,0 +1,421 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Address API",
+    "description": "API for managing addresses associated with contacts",
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "https://localhost:3000"
+    }
+  ],
+  "paths": {
+    "/api/contacts/{idContact}/address": {
+      "post": {
+        "summary": "Create a new address",
+        "description": "Create a new address associated with a contact",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Bearer token for authentication"
+          },
+          {
+            "name": "idContact",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID of the contact"
+          }
+        ],
+        "requestBody": {
+          "description": "Details of the address to create",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "street": {
+                    "type": "string",
+                    "description": "Street name and number"
+                  },
+                  "city": {
+                    "type": "string",
+                    "description": "City name"
+                  },
+                  "province": {
+                    "type": "string",
+                    "description": "Province or state"
+                  },
+                  "country": {
+                    "type": "string",
+                    "description": "Country name"
+                  },
+                  "postalCode": {
+                    "type": "string",
+                    "description": "Postal or ZIP code"
+                  }
+                },
+                "required": ["street", "city", "province", "country", "postalCode"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Address created successfully",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "type" : "object",
+                  "properties": {
+                    "data":{
+                      "type": "object",
+                      "properties": {
+                        "id":{
+                          "type": "number"
+                        },
+                        "street": {
+                          "type": "string",
+                          "description": "Street name and number"
+                        },
+                        "city": {
+                          "type": "string",
+                          "description": "City name"
+                        },
+                        "province": {
+                          "type": "string",
+                          "description": "Province or state"
+                        },
+                        "country": {
+                          "type": "string",
+                          "description": "Country name"
+                        },
+                        "postalCode": {
+                          "type": "string",
+                          "description": "Postal or ZIP code"
+                        }
+                      }
+
+                    },
+                    "errors":{
+                      "type":"object"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input data"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "get": {
+        "description": "Get List Addresses",
+        "responses": {
+          "200": {
+            "description": "List Addresses",
+            "content": {
+              "application/json":{
+                "schema":{
+                  "type": "object",
+                  "properties":{
+                    "data":{
+                      "type": "array",
+                      "items":{
+                        "type": "object",
+                        "properties": {
+                          "id":{
+                            "type": "number"
+                          },
+                          "street": {
+                            "type": "string",
+                            "description": "Street name and number"
+                          },
+                          "city": {
+                            "type": "string",
+                            "description": "City name"
+                          },
+                          "province": {
+                            "type": "string",
+                            "description": "Province or state"
+                          },
+                          "country": {
+                            "type": "string",
+                            "description": "Country name"
+                          },
+                          "postalCode": {
+                            "type": "string",
+                            "description": "Postal or ZIP code"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/api/contacts/{idContact}/address/{idAddress}": {
+      "get": {
+        "summary": "Get an address by ID",
+        "description": "Retrieve the details of a specific address",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Bearer token for authentication"
+          },
+          {
+            "name": "idContact",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID of the contact"
+          },
+          {
+            "name": "idAddress",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID of the address"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Address created successfully",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "type" : "object",
+                  "properties": {
+                    "data":{
+                      "type": "object",
+                      "properties": {
+                        "id":{
+                          "type": "number"
+                        },
+                        "street": {
+                          "type": "string",
+                          "description": "Street name and number"
+                        },
+                        "city": {
+                          "type": "string",
+                          "description": "City name"
+                        },
+                        "province": {
+                          "type": "string",
+                          "description": "Province or state"
+                        },
+                        "country": {
+                          "type": "string",
+                          "description": "Country name"
+                        },
+                        "postalCode": {
+                          "type": "string",
+                          "description": "Postal or ZIP code"
+                        }
+                      }
+
+                    },
+                    "errors":{
+                      "type":"object"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Address not found"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update an address by ID",
+        "description": "Update the details of a specific address",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Bearer token for authentication"
+          },
+          {
+            "name": "idContact",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID of the contact"
+          },
+          {
+            "name": "idAddress",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID of the address"
+          }
+        ],
+        "requestBody": {
+          "description": "Update existing contact address",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "street": {
+                    "type": "string"
+                  },
+                  "city": {
+                    "type": "string"
+                  },
+                  "province": {
+                    "type": "string"
+                  },
+                  "country": {
+                    "type": "string"
+                  },
+                  "postalCode": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Address created successfully",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "type" : "object",
+                  "properties": {
+                    "data":{
+                      "type": "object",
+                      "properties": {
+                        "id":{
+                          "type": "number"
+                        },
+                        "street": {
+                          "type": "string",
+                          "description": "Street name and number"
+                        },
+                        "city": {
+                          "type": "string",
+                          "description": "City name"
+                        },
+                        "province": {
+                          "type": "string",
+                          "description": "Province or state"
+                        },
+                        "country": {
+                          "type": "string",
+                          "description": "Country name"
+                        },
+                        "postalCode": {
+                          "type": "string",
+                          "description": "Postal or ZIP code"
+                        }
+                      }
+
+                    },
+                    "errors":{
+                      "type":"object"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Address not found"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "delete": {
+        "description": "Delete a specific address",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Bearer token for authentication"
+          },
+          {
+            "name": "idContact",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID of the contact"
+          },
+          {
+            "name": "idAddress",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID of the address"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Address deleted successfully"
+          },
+          "404": {
+            "description": "Address not found"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    }
+  }
+}
