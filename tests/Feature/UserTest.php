@@ -17,7 +17,13 @@ class UserTest extends TestCase
             "password" => "rahasia",
             "name" => "Tia Mustika"
         ])
-        ->assertStatus(200)
+        ->assertStatus(201)
+        ->assertJson([
+            "data"=>[
+                "username" => "tia",
+                "name" => "Tia Mustika"
+            ]
+        ]);
     }
     public function testRegisterFailed(){
 
