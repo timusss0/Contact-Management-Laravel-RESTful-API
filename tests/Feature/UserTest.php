@@ -26,9 +26,40 @@ class UserTest extends TestCase
         ]);
     }
     public function testRegisterFailed(){
-
+        $this->post('/api/user',[
+            "username" => "",
+            "password" => "",
+            "name" => ""
+        ])
+        ->assertStatus(400)
+        ->assertJson([
+            "errors"=>[
+                "username" => [
+                    "The username field is required."
+                ],
+                "password" => [
+                    "The password field is required."
+                ],
+                "name" => [
+                    "The name field is required."
+                ]
+            ]
+        ]);
     }
     public function testRegisterUsernameAlreadyExists(){
-
+        $this->testRegisterSuccess();
+        $this->post('/api/user',[
+            "username" => "tia",
+            "password" => "rahasia",
+            "name" => "Tia Mustika"
+        ])
+        ->assertStatus(400)
+        ->assertJson([
+            "errors"=>[
+                "username" => [
+                    "Username already exists"
+                ]
+            ]
+        ]);
     }
 }
